@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Driven Financial Education</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #f5f5f5; }
+        header { background: #6200ea; color: white; padding: 20px; text-align: center; }
+        main { padding: 20px; }
+        .module { background: white; padding: 20px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+        .module h2 { margin: 0 0 10px; color: #6200ea; }
+        .module button { background: #6200ea; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        .module button:hover { background: #3700b3; }
+        .language-section, #output { margin-top: 20px; padding: 10px; background: #e3f2fd; border-radius: 4px; display: none; }
+        .quiz-section, .budget-section, .mentor-section { display: none; }
+        input[type="number"], input[type="text"] { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px; }
+        button.submit-btn { background: #03a9f4; color: white; border: none; padding: 10px 15px; margin-top: 10px; border-radius: 4px; cursor: pointer; }
+        button.submit-btn:hover { background: #0288d1; }
+        select { padding: 10px; margin-top: 10px; border-radius: 4px; border: 1px solid #ccc; }
+        .question { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 id="title">AI-Driven Financial Education</h1>
+        <label for="language-selector">Select Language:</label>
+        <select id="language-selector" onchange="translateApplication()">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="te">తెలుగు</option>
+        </select>
+    </header>
+    <main>
+        <div class="module">
+            <h2 id="module-1-title">Regional Language Learning</h2>
+            <p id="module-1-desc">Access personalized financial education in your language.</p>
+            <button onclick="loadLanguageModule()" id="module-1-btn">Access Resources</button>
+            <div class="language-section" id="resource-list">
+                <ul>
+                    <li><a href="https://www.khanacademy.org/" target="_blank" id="resource-1">Khan Academy</a> - Financial literacy courses</li>
+                    <li><a href="https://www.coursera.org/" target="_blank" id="resource-2">Coursera</a> - Financial education programs</li>
+                    <li><a href="https://www.edx.org/" target="_blank" id="resource-3">edX</a> - Personal finance and investment courses</li>
+                </ul>
+            </div>
+        </div>
+        <div class="module">
+            <h2 id="module-2-title">Gamified Learning</h2>
+            <p id="module-2-desc">Engage with quizzes and games to improve your skills.</p>
+            <button onclick="startQuiz()" id="module-2-btn">Start Learning</button>
+            <div class="quiz-section">
+                <div class="question" id="question-1">
+                    <p id="question-1-text">What is 10% of Rs.100?</p>
+                    <input type="number" id="quiz-answer-1" placeholder="Enter your answer">
+                    <button class="submit-btn" onclick="checkQuizAnswer(1, 10)" id="question-1-btn">Submit Answer</button>
+                    <div id="quiz-feedback-1"></div>
+                </div>
+                <div class="question" id="question-2">
+                    <p id="question-2-text">What is 20% of Rs.200?</p>
+                    <input type="number" id="quiz-answer-2" placeholder="Enter your answer">
+                    <button class="submit-btn" onclick="checkQuizAnswer(2, 40)" id="question-2-btn">Submit Answer</button>
+                    <div id="quiz-feedback-2"></div>
+                </div>
+                <div class="question" id="question-3">
+                    <p id="question-3-text">If you save Rs.50 a month, how much do you save in a year?</p>
+                    <input type="number" id="quiz-answer-3" placeholder="Enter your answer">
+                    <button class="submit-btn" onclick="checkQuizAnswer(3, 600)" id="question-3-btn">Submit Answer</button>
+                    <div id="quiz-feedback-3"></div>
+                </div>
+                <div class="question" id="question-4">
+                    <p id="question-4-text">What is the square root of 144?</p>
+                    <input type="number" id="quiz-answer-4" placeholder="Enter your answer">
+                    <button class="submit-btn" onclick="checkQuizAnswer(4, 12)" id="question-4-btn">Submit Answer</button>
+                    <div id="quiz-feedback-4"></div>
+                </div>
+                <div class="question" id="question-5">
+                    <p id="question-5-text">What is Rs.500 minus Rs.123?</p>
+                    <input type="number" id="quiz-answer-5" placeholder="Enter your answer">
+                    <button class="submit-btn" onclick="checkQuizAnswer(5, 377)" id="question-5-btn">Submit Answer</button>
+                    <div id="quiz-feedback-5"></div>
+                </div>
+                <button class="submit-btn" onclick="calculateQuizScore()" id="quiz-submit-btn">Submit Quiz</button>
+                <div id="quiz-final-feedback"></div>
+            </div>
+        </div>
+        <div class="module">
+            <h2 id="module-3-title">Budgeting and Investment</h2>
+            <p id="module-3-desc">Use simple tools to manage your finances and investments.</p>
+            <button onclick="loadBudgetTool()" id="module-3-btn">Use Tools</button>
+            <div class="budget-section">
+                <p id="budget-instruction-1">Enter your monthly income:</p>
+                <input type="number" id="income" placeholder="Income">
+                <p id="budget-instruction-2">Enter your monthly expenses:</p>
+                <input type="number" id="expenses" placeholder="Expenses">
+                <button class="submit-btn" onclick="calculateSavings()" id="budget-submit-btn">Calculate Savings</button>
+                <div id="budget-feedback"></div>
+            </div>
+        </div>
+        <div class="module">
+            <h2 id="module-4-title">Entrepreneurial Support</h2>
+            <p id="module-4-desc">Access resources to create and grow your business.</p>
+            <button onclick="displayMessage('Entrepreneurial Support Module Loaded')" id="module-4-btn">Get Support</button>
+        </div>
+        <div class="module">
+            <h2 id="module-5-title">Community and Mentorship</h2>
+            <p id="module-5-desc">Connect with mentors and peers for guidance.</p>
+            <button onclick="joinCommunity()" id="module-5-btn">Join Community</button>
+            <div class="mentor-section">
+                <p id="mentor-instruction">Ask a question for our mentors:</p>
+                <input type="text" id="mentor-question" placeholder="Your question">
+                <button class="submit-btn" onclick="submitMentorQuestion()" id="mentor-submit-btn">Submit Question</button>
+                <div id="mentor-feedback"></div>
+            </div>
+        </div>
+        <div id="output"></div>
+    </main>
+    <script>
+        const translations = {
+            en: {
+                title: "AI-Driven Financial Education",
+                modules: {
+                    regional: {
+                        title: "Regional Language Learning",
+                        description: "Access personalized financial education in your language.",
+                        button: "Access Resources",
+                        links: {
+                            1: "Khan Academy - Financial literacy courses",
+                            2: "Coursera - Financial education programs",
+                            3: "edX - Personal finance and investment courses"
+                        }
+                    },
+                    gamified: {
+                        title: "Gamified Learning",
+                        description: "Engage with quizzes and games to improve your skills.",
+                        button: "Start Learning",
+                        question1: "What is 10% of Rs.100?",
+                        question2: "What is 20% of Rs.200?",
+                        question3: "If you save Rs.50 a month, how much do you save in a year?",
+                        question4: "What is the square root of 144?",
+                        question5: "What is Rs.500 minus Rs.123?"
+                    },
+                    budgeting: {
+                        title: "Budgeting and Investment",
+                        description: "Use simple tools to manage your finances and investments.",
+                        button: "Use Tools",
+                        income: "Enter your monthly income:",
+                        expenses: "Enter your monthly expenses:"
+                    },
+                    entrepreneurial: {
+                        title: "Entrepreneurial Support",
+                        description: "Access resources to create and grow your business.",
+                        button: "Get Support"
+                    },
+                    mentorship: {
+                        title: "Community and Mentorship",
+                        description: "Connect with mentors and peers for guidance.",
+                        button: "Join Community",
+                        mentorQuestionLabel: "Ask a question for our mentors:"
+                    }
+                }
+            },
+            hi: {
+                title: "एआई-आधारित वित्तीय शिक्षा",
+                modules: {
+                    regional: {
+                        title: "क्षेत्रीय भाषा सीखना",
+                        description: "अपनी भाषा में व्यक्तिगत वित्तीय शिक्षा प्राप्त करें।",
+                        button: "संसाधनों तक पहुँचें",
+                        links: {
+                            1: "Khan Academy - वित्तीय साक्षरता पाठ्यक्रम",
+                            2: "Coursera - वित्तीय शिक्षा कार्यक्रम",
+                            3: "edX - व्यक्तिगत वित्त और निवेश पाठ्यक्रम"
+                        }
+                    },
+                    gamified: {
+                        title: "गेम आधारित शिक्षा",
+                        description: "क्विज़ और खेलों के माध्यम से अपने कौशल को सुधारें।",
+                        button: "शुरू करें",
+                        question1: "रु.100 का 10% क्या है?",
+                        question2: "रु.200 का 20% कितना होता है?",
+                        question3: "अगर आप हर महीने 50 रुपये बचाते हैं, तो एक साल में आप कितने रुपये बचाएंगे?",
+                        question4: "144 का वर्गमूल क्या है?",
+                        question5: "500 रुपये में से 123 रुपये घटाने पर कितना होता है?"
+                    },
+                    budgeting: {
+                        title: "बजट और निवेश",
+                        description: "अपनी वित्तीय स्थिति और निवेशों को सरल उपकरणों के साथ प्रबंधित करें।",
+                        button: "उपकरणों का उपयोग करें",
+                        income: "अपनी मासिक आय दर्ज करें:",
+                        expenses: "अपनी मासिक खर्च दर्ज करें:"
+                    },
+                    entrepreneurial: {
+                        title: "उद्यमिता समर्थन",
+                        description: "अपने व्यवसाय को बनाने और बढ़ाने के लिए संसाधन प्राप्त करें।",
+                        button: "सहायता प्राप्त करें"
+                    },
+                    mentorship: {
+                        title: "समुदाय और मार्गदर्शन",
+                        description: "मार्गदर्शकों और साथियों से मार्गदर्शन प्राप्त करें।",
+                        button: "समुदाय से जुड़ें",
+                        mentorQuestionLabel: "हमारे मार्गदर्शकों से एक सवाल पूछें:"
+                    }
+                }
+            },
+            es: {
+                title: "Educación Financiera Impulsada por IA",
+                modules: {
+                    regional: {
+                        title: "Aprendizaje en Idioma Regional",
+                        description: "Accede a educación financiera personalizada en tu idioma.",
+                        button: "Acceder a Recursos",
+                        links: {
+                            1: "Khan Academy - Cursos de alfabetización financiera",
+                            2: "Coursera - Programas de educación financiera",
+                            3: "edX - Cursos de finanzas personales e inversiones"
+                        }
+                    },
+                    gamified: {
+                        title: "Aprendizaje Gamificado",
+                        description: "Participa en cuestionarios y juegos para mejorar tus habilidades.",
+                        button: "Comenzar a Aprender",
+                        question1: "¿Cuál es el 10% de 100 rupias?",
+                        question2: "¿Cuál es el 20% de 200 rupias?",
+                        question3: "Si ahorras 50 rupias al mes, ¿cuánto ahorras en un año?",
+                        question4: "¿Cuál es la raíz cuadrada de 144?",
+                        question5: "¿Cuánto es 500 rupias menos 123 rupias?"
+                    },
+                    budgeting: {
+                        title: "Presupuesto e Inversión",
+                        description: "Usa herramientas simples para administrar tus finanzas e inversiones.",
+                        button: "Usar Herramientas",
+                        income: "Ingresa tus ingresos mensuales:",
+                        expenses: "Ingresa tus gastos mensuales:"
+                    },
+                    entrepreneurial: {
+                        title: "Soporte Empresarial",
+                        description: "Accede a recursos para crear y hacer crecer tu negocio.",
+                        button: "Obtener Soporte"
+                    },
+                    mentorship: {
+                        title: "Comunidad y Mentoría",
+                        description: "Conéctate con mentores y compañeros para orientación.",
+                        button: "Unirse a la Comunidad",
+                        mentorQuestionLabel: "Haz una pregunta a nuestros mentores:"
+                    }
+                }
+            },
+            fr: {
+                title: "Éducation Financière par IA",
+                modules: {
+                    regional: {
+                        title: "Apprentissage en Langue Régionale",
+                        description: "Accédez à une éducation financière personnalisée dans votre langue.",
+                        button: "Accéder aux Ressources",
+                        links: {
+                            1: "Khan Academy - Cours d'alphabétisation financière",
+                            2: "Coursera - Programmes d'éducation financière",
+                            3: "edX - Cours sur les finances personnelles et les investissements"
+                        }
+                    },
+                    gamified: {
+                        title: "Apprentissage Gamifié",
+                        description: "Participez à des quiz et à des jeux pour améliorer vos compétences.",
+                        button: "Commencer à Apprendre",
+                        question1: "Quel est 10% de 100 roupies ?",
+                        question2: "Quel est 20 % de 200 roupies ?",
+                        question3: "Si vous économisez 50 roupies par mois, combien économisez-vous en un an ?",
+                        question4: "Quelle est la racine carrée de 144 ?",
+                        question5: "Combien font 500 roupies moins 123 roupies ?"
+                    },
+                    budgeting: {
+                        title: "Budget et Investissement",
+                        description: "Utilisez des outils simples pour gérer vos finances et investissements.",
+                        button: "Utiliser les Outils",
+                        income: "Entrez vos revenus mensuels :",
+                        expenses: "Entrez vos dépenses mensuelles :"
+                    },
+                    entrepreneurial: {
+                        title: "Soutien Entrepreneurial",
+                        description: "Accédez à des ressources pour créer et développer votre entreprise.",
+                        button: "Obtenez du Soutien"
+                    },
+                    mentorship: {
+                        title: "Communauté et Mentorat",
+                        description: "Connectez-vous avec des mentors et des pairs pour des conseils.",
+                        button: "Rejoindre la Communauté",
+                        mentorQuestionLabel: "Posez une question à nos mentors :"
+                    }
+                }
+            },
+            te: {
+                title: "ఏఐ ఆధారిత ఆర్థిక విద్య",
+                modules: {
+                    regional: {
+                        title: "ప్రాంతీయ భాషా అభ్యాసం",
+                        description: "మీ భాషలో వ్యక్తిగత ఆర్థిక విద్యను పొందండి.",
+                        button: "సాధనలకు యాక్సెస్ పొందండి",
+                        links: {
+                            1: "Khan Academy - ఆర్థిక సाक्षరత కోర్సులు",
+                            2: "Coursera - ఆర్థిక విద్యా ప్రోగ్రాములు",
+                            3: "edX - వ్యక్తిగత ఆర్థిక మరియు పెట్టుబడులు కోర్సులు"
+                        }
+                    },
+                    gamified: {
+                        title: "గేమిఫైడ్ అభ్యాసం",
+                        description: "ప్రశ్నలు మరియు ఆటలతో మీ నైపుణ్యాలను మెరుగుపరచండి.",
+                        button: "అభ్యసనాన్ని ప్రారంభించండి",
+                        question1: "రూపాయల 100 యొక్క 10% ఎంత?",
+                        question2: "రూపాయల 200 యొక్క 20% ఎంత?",
+                        question3: "మీరు నెలకు 50 రూపాయలు పొదుపు చేస్తే, ఒక సంవత్సరం లో మీరు ఎంత పొదుపు చేస్తారు?",
+                        question4: "144 యొక్క వర్గమూలం ఏమిటి?",
+                        question5: "500 రూపాయల నుండి 123 రూపాయలు తీసేసినప్పుడు ఎంత అవుతుంది?"
+                    },
+                    budgeting: {
+                        title: "బడ్జెట్ మరియు పెట్టుబడులు",
+                        description: "మీ ఆర్థికాలు మరియు పెట్టుబడులను సులభమైన సాధనాలతో నిర్వహించండి.",
+                        button: "సాధనాలను ఉపయోగించండి",
+                        income: "మీ నెలవారీ ఆదాయాన్ని నమోదు చేయండి:",
+                        expenses: "మీ నెలవారీ ఖర్చులను నమోదు చేయండి:"
+                    },
+                    entrepreneurial: {
+                        title: "వ్యవసాయ మద్దతు",
+                        description: "మీ వ్యాపారాన్ని సృష్టించడానికి మరియు పెంచడానికి వనరులను పొందండి.",
+                        button: "సమర్థనాన్ని పొందండి"
+                    },
+                    mentorship: {
+                        title: "సమూహం మరియు మార్గదర్శకత్వం",
+                        description: "మార్గదర్శకుల నుండి గైడ్ పొందండి.",
+                        button: "సమూహంలో చేరండి",
+                        mentorQuestionLabel: "మా మార్గదర్శకులకు ఒక ప్రశ్న అడగండి:"
+                    }
+                }
+            }
+        };
+
+        let currentLanguage = 'en';
+
+        function translateApplication() {
+            currentLanguage = document.getElementById('language-selector').value;
+            const langData = translations[currentLanguage];
+
+            document.getElementById('title').innerText = langData.title;
+            // Update regional language module
+            document.getElementById('module-1-title').innerText = langData.modules.regional.title;
+            document.getElementById('module-1-desc').innerText = langData.modules.regional.description;
+            document.getElementById('module-1-btn').innerText = langData.modules.regional.button;
+            document.getElementById('resource-1').innerText = langData.modules.regional.links[1];
+            document.getElementById('resource-2').innerText = langData.modules.regional.links[2];
+            document.getElementById('resource-3').innerText = langData.modules.regional.links[3];
+            // Update gamified learning module
+            document.getElementById('module-2-title').innerText = langData.modules.gamified.title;
+            document.getElementById('module-2-desc').innerText = langData.modules.gamified.description;
+            document.getElementById('module-2-btn').innerText = langData.modules.gamified.button;
+            document.getElementById('question-1-text').innerText = langData.modules.gamified.question1;
+            document.getElementById('question-2-text').innerText = langData.modules.gamified.question2;
+            document.getElementById('question-3-text').innerText = langData.modules.gamified.question3;
+            document.getElementById('question-4-text').innerText = langData.modules.gamified.question4;
+            document.getElementById('question-5-text').innerText = langData.modules.gamified.question5;
+            // Update budgeting and investment module
+            document.getElementById('module-3-title').innerText = langData.modules.budgeting.title;
+            document.getElementById('module-3-desc').innerText = langData.modules.budgeting.description;
+            document.getElementById('module-3-btn').innerText = langData.modules.budgeting.button;
+            document.getElementById('budget-instruction-1').innerText = langData.modules.budgeting.income;
+            document.getElementById('budget-instruction-2').innerText = langData.modules.budgeting.expenses;
+            // Update entrepreneurial support module
+            document.getElementById('module-4-title').innerText = langData.modules.entrepreneurial.title;
+            document.getElementById('module-4-desc').innerText = langData.modules.entrepreneurial.description;
+            document.getElementById('module-4-btn').innerText = langData.modules.entrepreneurial.button;
+            // Update mentorship module
+            document.getElementById('module-5-title').innerText = langData.modules.mentorship.title;
+            document.getElementById('module-5-desc').innerText = langData.modules.mentorship.description;
+            document.getElementById('module-5-btn').innerText = langData.modules.mentorship.button;
+            document.getElementById('mentor-instruction').innerText = langData.modules.mentorship.mentorQuestionLabel;
+        }
+
+        function loadLanguageModule() {
+            document.getElementById('resource-list').style.display = 'block';
+        }
+
+        function startQuiz() {
+            document.querySelector('.quiz-section').style.display = 'block';
+        }
+
+        function checkQuizAnswer(questionNumber, correctAnswer) {
+            const answer = document.getElementById(`quiz-answer-${questionNumber}`).value;
+            const feedback = document.getElementById(`quiz-feedback-${questionNumber}`);
+            if (parseInt(answer) === correctAnswer) {
+                feedback.innerText = "Correct!";
+                feedback.style.color = "green";
+            } else {
+                feedback.innerText = "Incorrect, try again.";
+                feedback.style.color = "red";
+            }
+        }
+
+        function calculateQuizScore() {
+            const correctAnswers = [
+                10, 40, 600, 12, 377
+            ];
+            let score = 0;
+            correctAnswers.forEach((answer, index) => {
+                const userAnswer = parseInt(document.getElementById(`quiz-answer-${index + 1}`).value);
+                if (userAnswer === answer) {
+                    score++;
+                }
+            });
+            document.getElementById('quiz-final-feedback').innerText = `You scored ${score} out of 5`;
+        }
+
+        function loadBudgetTool() {
+            document.querySelector('.budget-section').style.display = 'block';
+        }
+
+        function calculateSavings() {
+            const income = parseInt(document.getElementById('income').value);
+            const expenses = parseInt(document.getElementById('expenses').value);
+            const savings = income - expenses;
+            document.getElementById('budget-feedback').innerText = `Your savings: Rs.${savings}`;
+        }
+
+        function submitMentorQuestion() {
+            const question = document.getElementById('mentor-question').value;
+            document.getElementById('mentor-feedback').innerText = `Your question has been submitted: "${question}"`;
+        }
+
+        function joinCommunity() {
+            document.querySelector('.mentor-section').style.display = 'block';
+        }
+
+        function displayMessage(message) {
+            alert(message);
+        }
+    </script>
+</body>
+</html>
